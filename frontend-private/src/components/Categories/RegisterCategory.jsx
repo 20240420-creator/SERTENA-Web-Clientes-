@@ -1,32 +1,34 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify'; // Asegúrate de tener react-toastify instalado
-import api from '../../api/api'; // Importamos la configuración de la API
+import api from '../../api/api'; // Importa la configuración de la API
 
-const RegisterBrand = () => {
-    // Inicializamos el formulario con react-hook-form
+const RegisterCategory = () => {
+    // Inicializa el formulario con react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     // Función para manejar el envío del formulario
     const onSubmit = async (data) => {
         try {
-            // Realizamos la llamada a la API para registrar la nueva marca
-            const response = await api.post('/brands', data);
-            // Mostramos un mensaje de éxito
-            toast.success('Marca registrada exitosamente!');
-            // Limpiamos el formulario (opcional)
+            // Realiza la llamada a la API para registrar la nueva categoría
+            const response = await api.post('/categories', data);
+            // Muestra un mensaje de éxito
+            toast.success('Categoría registrada con éxito!');
+            // Limpia el formulario después de un registro exitoso
+            console.log(response.data);
         } catch (error) {
-            // Mostramos un mensaje de error en caso de fallo
-            toast.error('Error al registrar la marca. Intenta nuevamente.');
+            // Muestra un mensaje de error en caso de fallo
+            toast.error('Error al registrar la categoría. Inténtalo de nuevo.');
+            console.error(error);
         }
     };
 
     return (
-        <div className="register-brand">
-            <h2>Registrar Nueva Marca</h2>
+        <div className="register-category">
+            <h2>Registrar Nueva Categoría</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label htmlFor="name">Nombre de la Marca</label>
+                    <label htmlFor="name">Nombre de la Categoría</label>
                     <input
                         id="name"
                         type="text"
@@ -42,10 +44,10 @@ const RegisterBrand = () => {
                     />
                     {errors.description && <span>{errors.description.message}</span>}
                 </div>
-                <button type="submit">Registrar Marca</button>
+                <button type="submit">Registrar Categoría</button>
             </form>
         </div>
     );
 };
 
-export default RegisterBrand;
+export default RegisterCategory;
